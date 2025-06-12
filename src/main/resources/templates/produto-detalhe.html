@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Concept - ' + ${produto.nome}">Concept - Produto</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1>Concept</h1>
+      <div style="margin-left:auto; display: flex; align-items: center;">
+        <span th:if="${usuarioLogado}">
+          <a href="/carrinho" class="carrinho-icon" title="Ir para o carrinho" style="margin-right:18px;">🛒</a>
+          <a href="/perfil" class="perfil-icon" title="Perfil do usuário">👤</a>
+        </span>
+        <span th:unless="${usuarioLogado}">
+          <a href="/login" class="btn-login-topo">Login</a>
+          <a href="/cadastro" class="btn-cadastro-topo">Cadastrar</a>
+        </span>
+      </div>
+    </div>
+    <nav>
+      <a class="ativo" th:text="${produto.nome}">Produto</a>
+    </nav>
+  </header>
+  <main>
+    <div class="produtos-box" style="display:flex;align-items:center;justify-content:center;">
+      <div>
+        <img th:src="@{${produto.imagem}}" th:alt="${produto.nome}" style="width:220px;">
+      </div>
+      <div style="margin-left:50px;">
+        <h2 th:text="${produto.nome}"></h2>
+        <div><b>Cor:</b> <span th:text="${produto.cor}"></span></div>
+        <div><b>Preço:</b> R$ <span th:text="${#numbers.formatDecimal(produto.preco, 1, 'POINT', 2)}"></span></div>
+        <div class="tamanhos" style="margin-top:20px;">
+          <h3 style="font-size:1.1em;">Tamanhos</h3>
+          <div class="botoes-tamanho">
+            <button>P</button>
+            <button>M</button>
+            <button>G</button>
+            <button>GG</button>
+          </div>
+        </div>
+        <div class="rodape">
+          <button class="btn-adicionar" style="margin-top:20px;">🛒 Adicionar ao carrinho</button>
+        </div>
+      </div>
+    </div>
+    <a href="/produtos" class="btn-voltar"><span>&#9664;</span></a>
+  </main>
+</body>
+</html>

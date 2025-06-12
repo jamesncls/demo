@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Perfil - Concept</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <h1>Concept</h1>
+      <div style="margin-left:auto;">
+        <a href="/carrinho" class="carrinho-icon" title="Ir para o carrinho" style="margin-right:18px;">🛒</a>
+        <a href="/perfil" class="perfil-icon" title="Perfil do usuário">👤</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="perfil-box">
+      <h2>Meu Perfil</h2>
+      <form th:action="@{/perfil}" th:object="${usuario}" method="post">
+        <label>Nome</label>
+        <input type="text" th:field="*{nome}" required>
+        <label>Email</label>
+        <input type="email" th:field="*{email}" required>
+        <label>CPF</label>
+        <input type="text" th:field="*{cpf}" required>
+        <button type="submit" class="btn-login" style="margin-top:18px;">Salvar Alterações</button>
+      </form>
+      <div th:if="${mensagem}" style="color:green;margin-top:15px;" th:text="${mensagem}"></div>
+    </div>
+  </main>
+</body>
+</html>
