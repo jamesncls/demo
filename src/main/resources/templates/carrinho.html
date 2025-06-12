@@ -24,11 +24,11 @@
         <img th:src="@{'/' + ${item.imagem}}" alt="camiseta" class="carrinho-img">
         <div class="carrinho-desc">
           <div class="carrinho-nome" th:text="${item.nome}">CAMISETA</div>
-          {% comment %} <div class="carrinho-info">
+          <div class="carrinho-info">
             <span>Quantidade<br><span th:text="${item.quantidade}">1</span></span>
-            <span>Preço<br>R$ <span th:text="${#numbers.formatDecimal(item.preco, 1, 'POINT', 2)}">100.00</span></span>
+            <span>Preço<br>R$ <span th:text="${#numbers.formatDecimal(item.preco, 1, 2, 'POINT')}">100.00</span></span>
             <span class="carrinho-trash"><img src="/img/trash.svg" alt="Remover" style="width:20px"></span>
-          </div> {% endcomment %}
+          </div>
         </div>
       </div>
     </section>
@@ -39,10 +39,10 @@
         <span class="pagamento-opcao cartao">Cartão<br>Débito/Crédito</span>
         <span class="pagamento-opcao boleto">Boleto</span>
       </div>
-      {% comment %} <div class="pagamento-valores">
-        <div>Frete fixo <span th:text="'R$ ' + ${#numbers.formatDecimal(frete, 1, 'POINT', 2)}">R$ 12,50</span></div>
-        <div><b>Total do Pedido</b> <span th:text="'R$ ' + ${#numbers.formatDecimal(total, 1, 'POINT', 2)}">R$ 193,40</span></div>
-      </div> {% endcomment %}
+     <div class="pagamento-valores">
+        <div>Frete fixo <span th:text="'R$ ' + ${#numbers.formatDecimal(frete, 1, 2, 'POINT')}">R$ 12,50</span></div>
+        <div><b>Total do Pedido</b> <span th:text="'R$ ' + ${#numbers.formatDecimal(total, 1, 2, 'POINT')}">R$ 193,40</span></div>
+      </div>
       <button class="btn-finalizar">Concluir Compra</button>
     </aside>
     <a href="/produtos" class="btn-voltar"><span>&#9664;</span></a>
