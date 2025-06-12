@@ -8,6 +8,16 @@
   <header>
     <div class="top-bar">
       <h1>Concept</h1>
+      <div style="margin-left:auto; display: flex; align-items: center;">
+        <span th:if="${usuarioLogado}">
+          <a href="/carrinho" class="carrinho-icon" title="Ir para o carrinho" style="margin-right:18px;">🛒</a>
+          <a href="/perfil" class="perfil-icon" title="Perfil do usuário">👤</a>
+        </span>
+        <span th:unless="${usuarioLogado}">
+          <a href="/login" class="btn-login-topo">Login</a>
+          <a href="/cadastro" class="btn-cadastro-topo">Cadastrar</a>
+        </span>
+      </div>
     </div>
     <nav>
       <a class="ativo" th:text="${produto.nome}">Produto</a>
@@ -32,7 +42,16 @@
           </div>
         </div>
         <div class="rodape">
-          <button class="btn-adicionar" style="margin-top:20px;">🛒 Adicionar ao carrinho</button>
+            <span th:if="${usuarioLogado}">
+                <a href="/carrinho" class="btn-adicionar" style="margin-top:20px; display:inline-block; text-align:center; text-decoration:none;">
+                🛒 Adicionar ao carrinho
+                </a>
+            </span>
+            <span th:unless="${usuarioLogado}">
+                <a href="/login" class="btn-adicionar" style="margin-top:20px; display:inline-block; text-align:center; text-decoration:none;">
+                🛒 Adicionar ao carrinho
+                </a>
+            </span>
         </div>
       </div>
     </div>
