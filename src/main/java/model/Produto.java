@@ -13,8 +13,16 @@ public class Produto {
         this.preco = preco;
     }
 
-    public String getNome() { return nome; }
-    public String getImagem() { return imagem; }
-    public String getCor() { return cor; }
-    public double getPreco() { return preco; }
+    public String getNome() { 
+        return nome; 
+    }
+    public String getImagem() { 
+        return imagem; 
+    }
+    public String getCor() { 
+        return cor; 
+    }
+    public double getPreco() { 
+        return preco; 
+    }
 }
