@@ -30,7 +30,7 @@
         <h2>Produtos</h2>
         <div class="camisetas-central">
           <div th:each="produto : ${produtos}" class="camiseta-item">
-            <a th:href="@{'/produto/' + ${produto.nome}}" style="text-decoration:none; color:inherit;">
+            <a th:href="@{'/produto/' + ${#strings.replace(produto.nome, ' ', '-')}}" style="text-decoration:none; color:inherit;">
               <img th:src="@{${produto.imagem}}" th:alt="${produto.nome}">
               <div class="camiseta-nome" th:text="${produto.nome}" style="margin-top:10px; text-align:center; font-weight:500;"></div>
             </a>

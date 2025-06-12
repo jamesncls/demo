@@ -809,3 +809,11 @@ main {
   margin-top: 8px;
   text-align: center;
 }
+
+/* Centraliza o conteúdo na tela de detalhe */
+.produtos-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
