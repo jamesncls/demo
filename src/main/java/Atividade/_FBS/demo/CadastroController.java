@@ -11,7 +11,7 @@ import model.UsuarioCadastro;
 @Controller
 public class CadastroController {
 
-    @GetMapping("/cadastro")
+     @GetMapping("/cadastro")
     public String mostrarCadastro(Model model) {
         model.addAttribute("usuarioCadastro", new UsuarioCadastro());
         return "cadastro";
@@ -21,8 +21,8 @@ public class CadastroController {
     public String processarCadastro(@ModelAttribute UsuarioCadastro usuarioCadastro, Model model) {
         // Aqui você pode adicionar lógica para salvar o usuário
         // Exemplo: salvar no banco de dados
-        // Após cadastro, pode redirecionar para login ou produtos
-        // return "redirect:/login";
-        return "cadastro";
+
+        // Após cadastro, redireciona para a tela de produtos
+        return "redirect:/produtos";
     }
 }

@@ -17,14 +17,10 @@ public class LoginController {
         return "login";
     }
 
+
     @PostMapping("/login")
     public String processarLogin(@ModelAttribute Usuario usuario, Model model) {
-        // Aqui você pode adicionar lógica de autenticação
-        // Exemplo: se email e senha forem válidos, redireciona para produtos
-        // if (usuario.getEmail().equals("teste@teste.com") && usuario.getSenha().equals("123")) {
-        //     return "redirect:/produtos";
-        // }
-        // model.addAttribute("erro", "Usuário ou senha inválidos");
-        return "login";
+        // ... lógica de autenticação ...
+        return "redirect:/produtos";
     }
 }
