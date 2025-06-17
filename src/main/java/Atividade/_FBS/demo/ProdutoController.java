@@ -22,7 +22,7 @@ public class ProdutoController {
         model.addAttribute("produtos", produtos);
 
         // Simulação de autenticação (troque pela sua lógica real)
-        boolean usuarioLogado = false; // Troque para true se o usuário estiver logado
+        boolean usuarioLogado = true; // Troque para true se o usuário estiver logado
         model.addAttribute("usuarioLogado", usuarioLogado);
 
         return "produtos";
@@ -48,7 +48,7 @@ public class ProdutoController {
         model.addAttribute("produto", produtoSelecionado);
 
         // Simulação de autenticação (troque pela sua lógica real)
-        boolean usuarioLogado = false; // Troque para true se o usuário estiver logado
+        boolean usuarioLogado = true; // Troque para true se o usuário estiver logado
         model.addAttribute("usuarioLogado", usuarioLogado);
 
         return "produto-detalhe";

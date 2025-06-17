@@ -58,4 +58,71 @@
     <a href="/produtos" class="btn-voltar"><span>&#9664;</span></a>
   </main>
 </body>
+
+<script>
+  // Seleção de tamanho
+  document.querySelectorAll('.botoes-tamanho button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (this.classList.contains('selected')) {
+        this.classList.remove('selected');
+      } else {
+        document.querySelectorAll('.botoes-tamanho button').forEach(b => b.classList.remove('selected'));
+        this.classList.add('selected');
+      }
+      removerAviso();
+    });
+  });
+
+  // Cria aviso se não existir
+  function mostrarAviso(msg) {
+    let aviso = document.getElementById('aviso-tamanho');
+    if (!aviso) {
+      aviso = document.createElement('div');
+      aviso.id = 'aviso-tamanho';
+      aviso.style.color = '#a34d4d';
+      aviso.style.marginTop = '12px';
+      aviso.style.fontWeight = 'bold';
+      aviso.style.fontSize = '1em';
+      let rodape = document.querySelector('.rodape');
+      rodape.parentNode.insertBefore(aviso, rodape.nextSibling);
+    }
+    aviso.textContent = msg;
+  }
+
+  function removerAviso() {
+    let aviso = document.getElementById('aviso-tamanho');
+    if (aviso) aviso.remove();
+  }
+
+  // Lógica para adicionar/remover do carrinho
+  document.querySelectorAll('.btn-adicionar').forEach(btn => {
+    btn.addEventListener('click', function(event) {
+      event.preventDefault();
+      // Thymeleaf injeta o valor de usuarioLogado
+      var usuarioLogado = /*[[${usuarioLogado}]]*/ true;
+      const tamanhoSelecionado = document.querySelector('.botoes-tamanho button.selected');
+      removerAviso();
+
+      if (!usuarioLogado) {
+        window.location.href = "/login";
+        return;
+      }
+
+      if (!tamanhoSelecionado) {
+        mostrarAviso('Antes de adicionar o produto ao carrinho, selecione um tamanho para a camiseta');
+        this.classList.remove('selected');
+        this.textContent = '🛒 Adicionar ao carrinho';
+        return;
+      }
+
+      if (!this.classList.contains('selected')) {
+        this.classList.add('selected');
+        this.textContent = 'Adicionado ao Carrinho';
+      } else {
+        this.classList.remove('selected');
+        this.textContent = '🛒 Adicionar ao carrinho';
+      }
+    });
+  });
+</script>
 </html>
