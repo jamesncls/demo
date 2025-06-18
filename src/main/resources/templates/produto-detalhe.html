@@ -35,23 +35,27 @@
         <div class="tamanhos" style="margin-top:20px;">
           <h3 style="font-size:1.1em;">Tamanhos</h3>
           <div class="botoes-tamanho">
-            <button>P</button>
-            <button>M</button>
-            <button>G</button>
-            <button>GG</button>
+            <button type="button">P</button>
+            <button type="button">M</button>
+            <button type="button">G</button>
+            <button type="button">GG</button>
           </div>
         </div>
         <div class="rodape">
-            <span th:if="${usuarioLogado}">
-                <a href="/carrinho" class="btn-adicionar" style="margin-top:20px; display:inline-block; text-align:center; text-decoration:none;">
-                🛒 Adicionar ao carrinho
-                </a>
-            </span>
-            <span th:unless="${usuarioLogado}">
-                <a href="/login" class="btn-adicionar" style="margin-top:20px; display:inline-block; text-align:center; text-decoration:none;">
-                🛒 Adicionar ao carrinho
-                </a>
-            </span>
+          <form action="/adicionar-carrinho" method="post" id="form-carrinho" th:if="${usuarioLogado}">
+            <input type="hidden" name="nome" th:value="${produto.nome}">
+            <input type="hidden" name="imagem" th:value="${produto.imagem}">
+            <input type="hidden" name="preco" th:value="${produto.preco}">
+            <input type="hidden" name="tamanho" id="input-tamanho" value="">
+            <button type="submit" class="btn-adicionar" style="margin-top:20px; display:inline-block; text-align:center; text-decoration:none;">
+              🛒 Adicionar ao carrinho
+            </button>
+          </form>
+          <span th:unless="${usuarioLogado}">
+            <a href="/login" class="btn-adicionar" style="margin-top:20px; display:inline-block; text-align:center; text-decoration:none;">
+              🛒 Adicionar ao carrinho
+            </a>
+          </span>
         </div>
       </div>
     </div>
@@ -63,15 +67,43 @@
   // Seleção de tamanho
   document.querySelectorAll('.botoes-tamanho button').forEach(btn => {
     btn.addEventListener('click', function() {
+      // Marca/desmarca o botão selecionado
       if (this.classList.contains('selected')) {
         this.classList.remove('selected');
+        document.getElementById('input-tamanho').value = '';
       } else {
         document.querySelectorAll('.botoes-tamanho button').forEach(b => b.classList.remove('selected'));
         this.classList.add('selected');
+        document.getElementById('input-tamanho').value = this.textContent;
       }
       removerAviso();
     });
   });
+
+  // Evento do botão de adicionar ao carrinho (apenas se logado)
+  const btnAdicionar = document.querySelector('#form-carrinho .btn-adicionar');
+  if (btnAdicionar) {
+    btnAdicionar.addEventListener('click', function(event) {
+      var usuarioLogado = /*[[${usuarioLogado}]]*/ true;
+      const tamanhoSelecionado = document.querySelector('.botoes-tamanho button.selected');
+      removerAviso();
+
+      if (!usuarioLogado) {
+        event.preventDefault();
+        window.location.href = "/login";
+        return;
+      }
+
+      if (!tamanhoSelecionado) {
+        event.preventDefault();
+        mostrarAviso('Antes de adicionar o produto ao carrinho, selecione um tamanho para a camiseta');
+        this.classList.remove('selected');
+        this.textContent = '🛒 Adicionar ao carrinho';
+        return;
+      }
+      // O formulário será enviado normalmente se tudo estiver correto
+    });
+  }
 
   // Cria aviso se não existir
   function mostrarAviso(msg) {
@@ -93,36 +125,5 @@
     let aviso = document.getElementById('aviso-tamanho');
     if (aviso) aviso.remove();
   }
-
-  // Lógica para adicionar/remover do carrinho
-  document.querySelectorAll('.btn-adicionar').forEach(btn => {
-    btn.addEventListener('click', function(event) {
-      event.preventDefault();
-      // Thymeleaf injeta o valor de usuarioLogado
-      var usuarioLogado = /*[[${usuarioLogado}]]*/ true;
-      const tamanhoSelecionado = document.querySelector('.botoes-tamanho button.selected');
-      removerAviso();
-
-      if (!usuarioLogado) {
-        window.location.href = "/login";
-        return;
-      }
-
-      if (!tamanhoSelecionado) {
-        mostrarAviso('Antes de adicionar o produto ao carrinho, selecione um tamanho para a camiseta');
-        this.classList.remove('selected');
-        this.textContent = '🛒 Adicionar ao carrinho';
-        return;
-      }
-
-      if (!this.classList.contains('selected')) {
-        this.classList.add('selected');
-        this.textContent = 'Adicionado ao Carrinho';
-      } else {
-        this.classList.remove('selected');
-        this.textContent = '🛒 Adicionar ao carrinho';
-      }
-    });
-  });
 </script>
 </html>
