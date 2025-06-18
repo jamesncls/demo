@@ -10,17 +10,22 @@
     <div class="top-bar">
       <h1>Concept</h1>
     </div>
+    <nav>
+      <a href="/produtos">Produtos</a>
+      <a href="/carrinho">Carrinho</a>
+      <a href="/entrega">Entrega</a>
+    </nav>
   </header>
   <main class="pagamento-main">
     <div class="pagamento-box" style="align-items:center;">
-      <img src="/img/pix.svg" alt="Pix" style="width:40px;display:block;margin:0 auto 5px;">
+      <img src="/img/pix.png" alt="Pix" style="width:40px;display:block;margin:0 auto 5px;">
       <div style="color:#a34d4d;font-size:1.2em;margin-bottom:10px;">Pix</div>
       <div style="color:#222;margin-bottom:18px;text-align:center;">Escaneie o Qrcode</div>
       <img th:src="@{${pagamentoPix.qrCodePath}}" alt="QR Code Pix" style="width:150px;height:150px;background:#fff;padding:8px;border-radius:8px;box-shadow:0 0 4px #bbb;">
       <div style="margin-top:20px;color:#444;text-align:center;">Copie o código</div>
       <div style="font-size:0.98em;color:#222;text-align:center;word-break:break-all;margin-top:5px;" th:text="${pagamentoPix.codigoPix}"></div>
     </div>
-    <a href="/pagamento" class="btn-voltar"><span>&#9664;</span></a>
+    <a href="/carrinho" class="btn-voltar"><span>&#9664;</span></a>
   </main>
 </body>
 </html>

@@ -723,3 +723,22 @@ body.cadastro-bg {
     color: #fff;
 }
 
+.btn-remover-carrinho {
+    background: #fff;
+    color: #a34d4d;
+    border: 1px solid #a34d4d;
+    border-radius: 5px;
+    padding: 4px 14px 4px 8px;
+    font-size: 0.98em;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, border 0.18s;
+}
+.btn-remover-carrinho:hover {
+    background: #a34d4d;
+    color: #fff;
+    border-color: #a34d4d;
+}

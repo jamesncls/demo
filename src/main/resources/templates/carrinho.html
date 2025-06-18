@@ -14,20 +14,25 @@
       <a href="/produtos">Produtos</a>
       <a class="ativo" href="/carrinho">Carrinho</a>
       <a href="/entrega">Entrega</a>
-      <a href="/pagamento">Pagamento</a>
     </nav>
   </header>
   <main class="carrinho-main">
     <section class="carrinho-lista">
       <h2>Meu Carrinho</h2>
-      <div th:each="item : ${itens}" class="carrinho-item">
+      <div th:each="item, iterStat : ${itens}" class="carrinho-item">
         <img th:src="@{'/' + ${item.imagem}}" alt="camiseta" class="carrinho-img">
         <div class="carrinho-desc">
           <div class="carrinho-nome" th:text="${item.nome}">CAMISETA</div>
           <div class="carrinho-info">
             <span>Quantidade<br><span th:text="${item.quantidade}">1</span></span>
             <span>Preço<br>R$ <span th:text="${#numbers.formatDecimal(item.preco, 1, 2, 'POINT')}">100.00</span></span>
-            <span class="carrinho-trash"><img src="/img/trash.svg" alt="Remover" style="width:20px"></span>
+            <form action="/remover-carrinho" method="post" style="display:inline;">
+              <input type="hidden" name="index" th:value="${iterStat.index}" />
+              <button type="submit" class="btn-remover-carrinho">
+                <img src="/img/trash.png" alt="Remover" style="width:18px; vertical-align:middle; margin-right:6px;">
+                Remover
+              </button>
+            </form>
           </div>
         </div>
       </div>

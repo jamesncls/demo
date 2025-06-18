@@ -30,6 +30,16 @@ public class CarrinhoController {
         return "carrinho";
     }
 
+    @PostMapping("/remover-carrinho")
+    public String removerCarrinho(@RequestParam int index, HttpSession session) {
+        List<CarrinhoItem> itens = (List<CarrinhoItem>) session.getAttribute("itens");
+        if (itens != null && index >= 0 && index < itens.size()) {
+            itens.remove(index);
+            session.setAttribute("itens", itens);
+        }
+        return "redirect:/carrinho";
+    }
+    
     @PostMapping("/adicionar-carrinho")
     public String adicionarCarrinho(
             @RequestParam String nome,
