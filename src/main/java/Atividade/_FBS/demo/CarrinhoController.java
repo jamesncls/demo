@@ -19,8 +19,12 @@ public class CarrinhoController {
         itens.add(new CarrinhoItem("CAMISETA ROXA P", "camiseta-roxa.png", 1, 100.00));
         itens.add(new CarrinhoItem("CAMISETA AZUL M", "camiseta-azul.png", 1, 120.00));
 
+        // ...existing code...
         double frete = 12.50;
-        //double total = itens.stream().mapToDouble(i -> i.getPreco() * i.getQuantidade()).sum() + frete;
+        model.addAttribute("frete", frete);
+        double total = itens.stream().mapToDouble(i -> i.getPreco() * i.getQuantidade()).sum() + frete;
+        model.addAttribute("total", total);
+        // ...existing code...
 
         model.addAttribute("itens", itens);
        /* model.addAttribute("frete", frete);

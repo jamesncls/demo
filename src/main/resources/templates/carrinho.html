@@ -48,4 +48,22 @@
     <a href="/produtos" class="btn-voltar"><span>&#9664;</span></a>
   </main>
 </body>
+<script>
+  document.querySelectorAll('.pagamento-opcao').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (btn.classList.contains('pix')) {
+        window.location.href = '/pagamento-pix';
+      } else if (btn.classList.contains('cartao')) {
+        window.location.href = '/pagamento-cartao';
+      } else if (btn.classList.contains('boleto')) {
+        window.location.href = '/pagamento-boleto';
+      }
+    });
+  });
+
+  document.querySelector('.btn-finalizar').addEventListener('click', function(event) {
+    event.preventDefault();
+    window.location.href = '/pedido-sucesso';
+  });
+</script>
 </html>

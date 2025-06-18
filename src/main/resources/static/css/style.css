@@ -496,7 +496,6 @@ body.cadastro-bg {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 4px solid #2196f3;
     border-radius: 8px;
 }
 
@@ -700,3 +699,27 @@ body.cadastro-bg {
     background-color: #a34d4d !important;
     color: #fff !important;
 }
+
+.btn-voltar-loja {
+    display: block;
+    margin: 32px auto 0 auto;
+    padding: 12px 32px;
+    background-color: #a34d4d;
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(163,77,77,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+}
+.btn-voltar-loja:hover {
+    background-color: #7a2e2e;
+    box-shadow: 0 4px 16px rgba(163,77,77,0.15);
+    color: #fff;
+}
+
