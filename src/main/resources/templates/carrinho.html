@@ -9,6 +9,10 @@
   <header>
     <div class="top-bar">
       <h1>Concept <span style="color:#c9a6a6;font-size:0.7em;">cart</span> <span class="carrinho-icon">🛒</span></h1>
+      <div style="margin-left:auto;">
+        <a href="/perfil" class="perfil-icon" title="Perfil do usuário">👤</a>
+        <a href="/logout" class="logout-link" title="Sair" style="margin-left:10px;">🚪</a>
+      </div>
     </div>
     <nav>
       <a href="/produtos">Produtos</a>
@@ -19,15 +23,25 @@
   <main class="carrinho-main">
     <section class="carrinho-lista">
       <h2>Meu Carrinho</h2>
-      <div th:each="item, iterStat : ${itens}" class="carrinho-item">
+      <div th:if="${#lists.isEmpty(itens)}" class="alert alert-info">
+        Seu carrinho está vazio. <a href="/produtos">Continue comprando</a>
+      </div>
+      <div th:each="item : ${itens}" class="carrinho-item">
         <img th:src="@{'/' + ${item.imagem}}" alt="camiseta" class="carrinho-img">
         <div class="carrinho-desc">
           <div class="carrinho-nome" th:text="${item.nome}">CAMISETA</div>
           <div class="carrinho-info">
-            <span>Quantidade<br><span th:text="${item.quantidade}">1</span></span>
+            <span>Quantidade<br>
+              <form action="/atualizar-quantidade" method="post" style="display:inline;">
+                <input type="hidden" name="itemId" th:value="${item.id}" />
+                <input type="number" name="quantidade" th:value="${item.quantidade}" min="1" max="10" 
+                       style="width:60px;" onchange="this.form.submit()">
+              </form>
+            </span>
             <span>Preço<br>R$ <span th:text="${#numbers.formatDecimal(item.preco, 1, 2, 'POINT')}">100.00</span></span>
+            <span>Total<br>R$ <span th:text="${#numbers.formatDecimal(item.total, 1, 2, 'POINT')}">100.00</span></span>
             <form action="/remover-carrinho" method="post" style="display:inline;">
-              <input type="hidden" name="index" th:value="${iterStat.index}" />
+              <input type="hidden" name="itemId" th:value="${item.id}" />
               <button type="submit" class="btn-remover-carrinho">
                 <img src="/img/trash.png" alt="Remover" style="width:18px; vertical-align:middle; margin-right:6px;">
                 Remover
@@ -37,7 +51,7 @@
         </div>
       </div>
     </section>
-    <aside class="carrinho-pagamento">
+    <aside class="carrinho-pagamento" th:if="${!#lists.isEmpty(itens)}">
       <h3>Forma de Pagamento</h3>
       <div class="pagamento-opcoes">
         <span class="pagamento-opcao pix">Pix</span>
@@ -45,6 +59,7 @@
         <span class="pagamento-opcao boleto">Boleto</span>
       </div>
      <div class="pagamento-valores">
+        <div>Subtotal <span th:text="'R$ ' + ${#numbers.formatDecimal(subtotal, 1, 2, 'POINT')}">R$ 180,90</span></div>
         <div>Frete fixo <span th:text="'R$ ' + ${#numbers.formatDecimal(frete, 1, 2, 'POINT')}">R$ 12,50</span></div>
         <div><b>Total do Pedido</b> <span th:text="'R$ ' + ${#numbers.formatDecimal(total, 1, 2, 'POINT')}">R$ 193,40</span></div>
       </div>
@@ -66,7 +81,7 @@
     });
   });
 
-  document.querySelector('.btn-finalizar').addEventListener('click', function(event) {
+  document.querySelector('.btn-finalizar')?.addEventListener('click', function(event) {
     event.preventDefault();
     window.location.href = '/pedido-sucesso';
   });

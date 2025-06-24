@@ -10,6 +10,9 @@
     <h1 class="login-title">Concept</h1>
     <div class="login-box">
       <h2>Cadastro</h2>
+      <div th:if="${erro}" class="alert alert-danger" role="alert">
+        <span th:text="${erro}"></span>
+      </div>
       <form th:action="@{/cadastro}" th:object="${usuarioCadastro}" method="post">
         <div class="row-inputs">
           <input type="text" th:field="*{nome}" placeholder="Nome" required>

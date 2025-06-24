@@ -1,9 +1,8 @@
 package Atividade._FBS.demo;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,31 +11,57 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import model.CarrinhoItem;
-
+import model.Usuario;
+import service.CarrinhoService;
 
 @Controller
 public class CarrinhoController {
+    
+    @Autowired
+    private CarrinhoService carrinhoService;
+    
     @GetMapping("/carrinho")
     public String mostrarCarrinho(Model model, HttpSession session) {
-        List<CarrinhoItem> itens = (List<CarrinhoItem>) session.getAttribute("itens");
-        if (itens == null) {
-            itens = new ArrayList<>();
+        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        
+        if (usuarioLogado == null) {
+            return "redirect:/login";
         }
+        
+        List<CarrinhoItem> itens = carrinhoService.buscarItensCarrinho(usuarioLogado);
         double frete = 12.50;
-        model.addAttribute("frete", frete);
-        double total = itens.stream().mapToDouble(i -> i.getPreco() * i.getQuantidade()).sum() + frete;
-        model.addAttribute("total", total);
+        double subtotal = carrinhoService.calcularTotal(usuarioLogado);
+        double total = subtotal + frete;
+        
         model.addAttribute("itens", itens);
+        model.addAttribute("frete", frete);
+        model.addAttribute("subtotal", subtotal);
+        model.addAttribute("total", total);
+        
         return "carrinho";
     }
 
     @PostMapping("/remover-carrinho")
-    public String removerCarrinho(@RequestParam int index, HttpSession session) {
-        List<CarrinhoItem> itens = (List<CarrinhoItem>) session.getAttribute("itens");
-        if (itens != null && index >= 0 && index < itens.size()) {
-            itens.remove(index);
-            session.setAttribute("itens", itens);
+    public String removerCarrinho(@RequestParam Long itemId, HttpSession session) {
+        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        
+        if (usuarioLogado == null) {
+            return "redirect:/login";
         }
+        
+        carrinhoService.removerItem(itemId);
+        return "redirect:/carrinho";
+    }
+    
+    @PostMapping("/atualizar-quantidade")
+    public String atualizarQuantidade(@RequestParam Long itemId, @RequestParam int quantidade, HttpSession session) {
+        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        
+        if (usuarioLogado == null) {
+            return "redirect:/login";
+        }
+        
+        carrinhoService.atualizarQuantidade(itemId, quantidade);
         return "redirect:/carrinho";
     }
     
@@ -46,16 +71,17 @@ public class CarrinhoController {
             @RequestParam String imagem,
             @RequestParam String tamanho,
             @RequestParam double preco,
-            @RequestParam(defaultValue = "1") int quantidade,
             HttpSession session
     ) {
-        List<CarrinhoItem> itens = (List<CarrinhoItem>) session.getAttribute("itens");
-        if (itens == null) {
-            itens = new ArrayList<>();
+        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+        
+        if (usuarioLogado == null) {
+            return "redirect:/login";
         }
+        
         String nomeCompleto = nome + " " + tamanho;
-        itens.add(new CarrinhoItem(nomeCompleto, imagem, quantidade, preco));
-        session.setAttribute("itens", itens);
+        carrinhoService.adicionarItem(usuarioLogado, nomeCompleto, imagem, preco);
+        
         return "redirect:/carrinho";
     }
 }
